@@ -26,15 +26,24 @@
 
 	.text
 
-	/* r1: argc */
-	/* r2: argv */
-	/* r3: envp */
+/*	
+void __uClibc_main(int (*main)(int, char **, char **), int argc,
+	                    char **argv, void (*app_init)(void), void (*app_fini)(void)
+	,
+	                    void (*rtld_fini)(void), void *stack_end attribute_unused)
+*/
 _start:
+	mov.l	r0,[-r0]
+	mov.l	#0,r1
+	mov.l	r1,[-r0]
+	mov.l	r1,[-r0]
+	mov.l	#main, r1
+	mov.l	#0,r4
 	bsr	__uClibc_main
 
 	/* If that didn't kill us, ... */
 __exit:
-	mov.l	#1,r8	/* NR_exit */
+	mov.l	#1,r15	/* NR_exit */
 	int	#0x08
 
 /*
