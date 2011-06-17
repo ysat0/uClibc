@@ -24,6 +24,9 @@
 	.global atexit
 	.global main
 
+	.weak	_init
+	.weak	_fini
+	
 	.text
 
 /*	
@@ -33,12 +36,15 @@ void __uClibc_main(int (*main)(int, char **, char **), int argc,
 	                    void (*rtld_fini)(void), void *stack_end attribute_unused)
 */
 _start:
+	mov.l	[r0],r2
+	add	#4,r0,r3
 	mov.l	r0,[-r0]
 	mov.l	#0,r1
 	mov.l	r1,[-r0]
+	mov.l	#_fini,r1
 	mov.l	r1,[-r0]
 	mov.l	#main, r1
-	mov.l	#0,r4
+	mov.l	#_init,r4
 	bsr	__uClibc_main
 
 	/* If that didn't kill us, ... */
