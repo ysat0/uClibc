@@ -3,12 +3,12 @@
 #include <features.h>
 #include <bits/setjmp.h>
 
-.globl _longjmp
-.type  _longjmp,@function
+.globl __longjmp
+.type  __longjmp,@function
 
 	.text
 	.align 4
-_longjmp:
+__longjmp:
 	tst	r2,r2
 	scz.l	r2
 	mov.l	[r1+],r6
@@ -26,5 +26,5 @@ _longjmp:
 	add	[r1],r0
 	jmp	r3
 
-libc_hidden_def(_longjmp)
+libc_hidden_def(__longjmp)
 	.end
